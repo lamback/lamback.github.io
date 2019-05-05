@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="说明  本次实验主要利用分治、散列、递归，回溯、深度优先思想，完成n的阶乘、全排列问题、n皇后问题的C语言代码编写以及优化，解决问题难度逐渐升高。完成自主代码编写之后，最后分析代码的优缺点  内容  1.n的阶乘分析:递归主要需要找出递归边界和递归式，n！=1 2 3 4 …  n，所以写出递推的形式为n!=(n-1)! * n，递归边界即为到乘以1。 123456789101112131415">
+<meta property="og:type" content="article">
+<meta property="og:title" content="递归经典算法与模板">
+<meta property="og:url" content="http://yoursite.com/2019/05/04/recursion/index.html">
+<meta property="og:site_name" content="钊告天下">
+<meta property="og:description" content="说明  本次实验主要利用分治、散列、递归，回溯、深度优先思想，完成n的阶乘、全排列问题、n皇后问题的C语言代码编写以及优化，解决问题难度逐渐升高。完成自主代码编写之后，最后分析代码的优缺点  内容  1.n的阶乘分析:递归主要需要找出递归边界和递归式，n！=1 2 3 4 …  n，所以写出递推的形式为n!=(n-1)! * n，递归边界即为到乘以1。 123456789101112131415">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-05T01:32:13.217Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="递归经典算法与模板">
+<meta name="twitter:description" content="说明  本次实验主要利用分治、散列、递归，回溯、深度优先思想，完成n的阶乘、全排列问题、n皇后问题的C语言代码编写以及优化，解决问题难度逐渐升高。完成自主代码编写之后，最后分析代码的优缺点  内容  1.n的阶乘分析:递归主要需要找出递归边界和递归式，n！=1 2 3 4 …  n，所以写出递推的形式为n!=(n-1)! * n，递归边界即为到乘以1。 123456789101112131415">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/04/recursion/">
+
+
+
+
+
+  <title>递归经典算法与模板 | 钊告天下</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">钊告天下</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/04/recursion/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="钊告天下">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="钊告天下">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">递归经典算法与模板</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-04T20:58:45+08:00">
+                2019-05-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/经典算法与模板/" itemprop="url" rel="index">
+                    <span itemprop="name">经典算法与模板</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>说明</p>
+</blockquote>
+<p><strong>本次实验主要利用分治、散列、递归，回溯、深度优先思想，完成n的阶乘、全排列问题、n皇后问题的C语言代码编写以及优化，解决问题难度逐渐升高。完成自主代码编写之后，最后分析代码的优缺点</strong></p>
+<blockquote>
+<p>内容</p>
+</blockquote>
+<h4 id="1-n的阶乘"><a href="#1-n的阶乘" class="headerlink" title="1.n的阶乘"></a><strong>1.n的阶乘</strong></h4><p><strong>分析</strong>:递归主要需要找出递归边界和递归式，n！=1<em> 2</em> 3 <em>4 … </em> n，所以写出递推的形式为n!=(n-1)! * n，递归边界即为到乘以1。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt; </span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span>  <span class="title">F</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> n)</span></span>&#123;      <span class="comment">//使用long long存储，提高程序计算能力</span></span><br><span class="line">	<span class="keyword">if</span>(n==<span class="number">0</span>)    <span class="comment">//递归边界 ，到达及返回1 </span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	<span class="keyword">return</span> n*F(n<span class="number">-1</span>); <span class="comment">//递归式 </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入需要计算的正数n:"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%lld"</span>,&amp;n);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d的阶乘为：%lld"</span>,n,F(n));</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>优缺点:</strong></p>
+<p>1.用long long 类型存储结果，可以有效的提升算法的计算能力</p>
+<h4 id="2-全排列（输出从1-n的全排列）"><a href="#2-全排列（输出从1-n的全排列）" class="headerlink" title="2.全排列（输出从1~n的全排列）"></a><strong>2.全排列（输出从1~n的全排列）</strong></h4><p><strong>分析</strong><br>问题为”输出1-n这n个整数的全排列“，那么它就可以被分为若干个子问题：”输出以1开头的全排列“，”输出以2开头的全排列“……”输出以n开头的全排列“。这就是递归的思想，递归边界是递归位置到达最后，进入下一层递归的条件是枚举所以可以填入的数，如果该数未使用过，则处理下一位（即进行递归），其中使用散列表的值确定是否使用过；当递归结束后，还需要恢复散列表的值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>; </span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxnum=<span class="number">100</span>;  </span><br><span class="line"><span class="keyword">int</span> hashTable[maxnum]=&#123;<span class="literal">false</span>&#125;;  <span class="comment">//用于表示数字是否已经在此种排列中的散列表 </span></span><br><span class="line"><span class="keyword">int</span> result[maxnum]=&#123;<span class="number">0</span>&#125;;      <span class="comment">//临时存放结果的数组 </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">generate</span><span class="params">(<span class="keyword">int</span> pos,<span class="keyword">int</span> n)</span></span>&#123;  </span><br><span class="line">	<span class="keyword">if</span>(pos==n+<span class="number">1</span>)&#123;         <span class="comment">//递归边界，到达一个结果的边界，打印结果并返回 </span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d "</span>,result[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;   <span class="comment">//枚举1~n，看是否可以填入 </span></span><br><span class="line">		<span class="keyword">if</span>(hashTable[j]==<span class="literal">false</span>)&#123;   <span class="comment">//只有j未使用过才能填入 </span></span><br><span class="line">			result[pos]=j;</span><br><span class="line">			hashTable[pos]=<span class="literal">true</span>; </span><br><span class="line">			generate(pos+<span class="number">1</span>,n);   <span class="comment">//递归处理pos+1位置 </span></span><br><span class="line">			hashTable[pos]=<span class="literal">false</span>; <span class="comment">//恢复状态 </span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入整数n:"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	generate(<span class="number">1</span>,n); </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>存在的问题</strong><br>只能1——n的全排列，没有普遍性，上面这个算法主要在于递归与散列数组的使用 ，还实现了按字典序从小到大输出全排列 </p>
+<p><strong>改进思路</strong><br>将算法的条件改为输入任意个序列，输出该序列的全排列和总数</p>
+<p><strong>分析</strong><br>输入的任意个序列，通过数组保存下来，为保证实现字典序从小到大的输出，需要先进行排序；改用数组指针后移实现递归前进；递归边界是到达数组的最后一个位置，在特定位置上枚举所有在其位置后面的数，判断该数是否可以填入，如果可以，则交换至该位置，并进入下一层递归</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxnum=<span class="number">100</span>;</span><br><span class="line"><span class="keyword">int</span> a[maxnum]=&#123;<span class="number">-1</span>&#125;;    <span class="comment">//存放数列的数组</span></span><br><span class="line"><span class="keyword">int</span> sum=<span class="number">0</span>;             <span class="comment">//结果数量 </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> a[],<span class="keyword">int</span> q)</span></span>&#123;   <span class="comment">//打印输出 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=q;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,a[i]);</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> a[],<span class="keyword">int</span> p,<span class="keyword">int</span> i)</span></span>&#123; <span class="comment">//交换i,p位置上的两个数 </span></span><br><span class="line">	<span class="keyword">int</span> temp=a[p];</span><br><span class="line">	a[p]=a[i];</span><br><span class="line">	a[i]=temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">generate</span><span class="params">(<span class="keyword">int</span> a[],<span class="keyword">int</span> p,<span class="keyword">int</span> q)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p==q)&#123;     <span class="comment">//到达递归边界，打印结果，并计数 </span></span><br><span class="line">		print(a,q);</span><br><span class="line">		sum++;</span><br><span class="line">		<span class="keyword">return</span>; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=p;i&lt;=q;i++)&#123;   <span class="comment">//枚举数组位置及以后的所有数 </span></span><br><span class="line">		swap(a,p,i);</span><br><span class="line">		generate(a,p+<span class="number">1</span>,q);    <span class="comment">//进入下一层循环</span></span><br><span class="line">		swap(a,p,i);         <span class="comment">//恢复状态 </span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;    <span class="comment">//序列数量</span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入序列：\n"</span>); </span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a[i]);</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"全排列结果如下：\n"</span>); </span><br><span class="line">	sort(a,a+n);      <span class="comment">//STL库中的排序函数 </span></span><br><span class="line">	</span><br><span class="line">	generate(a,<span class="number">0</span>,n<span class="number">-1</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"结果总数为：%d"</span>,sum);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>存在的问题</strong><br>未考虑如果序列中存在重复是数字，如果出现重复的数字，结果将出问题</p>
+<p><strong>改进思路</strong><br>在枚举的过程中，添加判断函数，让从第一个数字起每个数分别与它后面非重复出现的数字交换。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxnum=<span class="number">100</span>;</span><br><span class="line"><span class="keyword">int</span> a[maxnum]=&#123;<span class="number">-1</span>&#125;;    <span class="comment">//存放数列的数组</span></span><br><span class="line"><span class="keyword">int</span> sum=<span class="number">0</span>;             <span class="comment">//结果数量 </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> a[],<span class="keyword">int</span> q)</span></span>&#123;   <span class="comment">//打印输出 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=q;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,a[i]);</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> a[],<span class="keyword">int</span> p,<span class="keyword">int</span> i)</span></span>&#123; <span class="comment">//交换i,p位置上的两个数 </span></span><br><span class="line">	<span class="keyword">int</span> temp=a[p];</span><br><span class="line">	a[p]=a[i];</span><br><span class="line">	a[i]=temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isswap</span><span class="params">(<span class="keyword">int</span> a[],<span class="keyword">int</span> q,<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;=q;j++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(a[j]==a[i])</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">generate</span><span class="params">(<span class="keyword">int</span> a[],<span class="keyword">int</span> p,<span class="keyword">int</span> q)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p==q)&#123;     <span class="comment">//到达递归边界，打印结果，并计数 </span></span><br><span class="line">		print(a,q);</span><br><span class="line">		sum++;</span><br><span class="line">		<span class="keyword">return</span>; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=p;i&lt;=q;i++)&#123;   <span class="comment">//枚举数组位置及以后的所有数 </span></span><br><span class="line">		<span class="keyword">if</span>(isswap(a,q,i))&#123;		<span class="comment">//解决重复问题：从第一个数字起每个数分别与它后面非重复出现的数字交换</span></span><br><span class="line">			swap(a,p,i);</span><br><span class="line">			generate(a,p+<span class="number">1</span>,q);    <span class="comment">//进入下一层循环</span></span><br><span class="line">			swap(a,p,i);         <span class="comment">//恢复状态 </span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;    <span class="comment">//序列数量</span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入序列：\n"</span>); </span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a[i]);</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"全排列结果如下：\n"</span>); </span><br><span class="line">	sort(a,a+n);      <span class="comment">//STL库中的排序函数 </span></span><br><span class="line">	</span><br><span class="line">	generate(a,<span class="number">0</span>,n<span class="number">-1</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"结果总数为：%d"</span>,sum);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-n的皇后问题"><a href="#3-n的皇后问题" class="headerlink" title="3.n的皇后问题"></a><strong>3.n的皇后问题</strong></h4><p><strong>问题描述</strong><br>在n*n的国际象棋棋盘上放置n个皇后，使得这n个皇后两两均不在同一行、同一列、同一条对角线上，其合法的方案数</p>
+<p><strong>分析</strong><br>如果采用组合数的方式来枚举每一种情况，那么枚举量会特别大；所以换一种思路，考虑到每行只能放置一个皇后，那么如果n行皇后的列数依次写出来，那么就会是1~n的一个排列；将二维的问题转化为一维的排列问题</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt; </span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>; </span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxnum=<span class="number">100</span>;</span><br><span class="line"><span class="keyword">int</span> a[maxnum]=&#123;<span class="number">0</span>&#125;;    <span class="comment">//暂存结果数组 </span></span><br><span class="line"><span class="keyword">int</span> hashTable[maxnum]=&#123;<span class="literal">false</span>&#125;; <span class="comment">//散列表表示列数是否可用 </span></span><br><span class="line"><span class="keyword">int</span> sum=<span class="number">0</span>;     		  <span class="comment">//方案数</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;   <span class="comment">//打印输出结果函数 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">generate</span><span class="params">(<span class="keyword">int</span> p,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p==n+<span class="number">1</span>)&#123;     <span class="comment">//递归边界 </span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;n;j++)&#123;  <span class="comment">//遍历任意两个皇后 </span></span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k=j+<span class="number">1</span>;k&lt;=n;k++)&#123;</span><br><span class="line">				<span class="keyword">if</span>(<span class="built_in">abs</span>(j-k)==<span class="built_in">abs</span>(a[j]-a[k])) <span class="comment">//如果在同一对角线上，直接返回 </span></span><br><span class="line">				<span class="keyword">return</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		sum++; </span><br><span class="line">		print(n);     <span class="comment">//打印输出合法结果 </span></span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;   <span class="comment">//枚举列数，该列未填数，则填入进行下一层递归 </span></span><br><span class="line">		<span class="keyword">if</span>(hashTable[i]==<span class="literal">false</span>)&#123;</span><br><span class="line">			hashTable[i]=<span class="literal">true</span>;</span><br><span class="line">			a[p]=i;</span><br><span class="line">			generate(p+<span class="number">1</span>,n);</span><br><span class="line">			hashTable[i]=<span class="literal">false</span>;  <span class="comment">//恢复未填状态 </span></span><br><span class="line">		&#125; 	</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;    <span class="comment">//皇后数 </span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入你想求解的皇后数:\n"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	generate(<span class="number">1</span>,n);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"全部结果数："</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d"</span>,sum);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>存在问题</strong><br>在调试该程序过程中发现当计算到n=12时，该程序已经无法迅速给出结果了；所以该程序的时间复杂度有待提高</p>
+<p><strong>改进思路</strong><br>上面程序的思路是枚举所有情况，然后再判断这种情况是否合法。事实上，通过思考可以发现，当已经放置了一部分皇后时（对应生成了一部分排列），可能剩下的皇后无论怎么放置都不合法，此时已经没有必要再递归下去，直接返回。也就是采用回溯法优化，将判断合法条件在递归中判断。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt; </span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>; </span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxnum=<span class="number">100</span>;</span><br><span class="line"><span class="keyword">int</span> a[maxnum]=&#123;<span class="number">0</span>&#125;;    <span class="comment">//暂存结果数组 </span></span><br><span class="line"><span class="keyword">int</span> hashTable[maxnum]=&#123;<span class="literal">false</span>&#125;; <span class="comment">//散列表表示列数是否可用 </span></span><br><span class="line"><span class="keyword">int</span> sum=<span class="number">0</span>;     		  <span class="comment">//方案数</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;   <span class="comment">//打印输出结果函数 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">islegal</span><span class="params">(<span class="keyword">int</span> p,<span class="keyword">int</span> j)</span></span>&#123;       <span class="comment">//回溯判断条件，是否在这同一对角线上 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;p;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">abs</span>(p-i)==<span class="built_in">abs</span>(j-a[i]))</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">generate</span><span class="params">(<span class="keyword">int</span> p,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p==n+<span class="number">1</span>)&#123;     <span class="comment">//递归边界 </span></span><br><span class="line">	<span class="comment">/*	for(int j=1;j&lt;n;j++)&#123;  //遍历任意两个皇后 </span></span><br><span class="line"><span class="comment">			for(int k=j+1;k&lt;=n;k++)&#123;</span></span><br><span class="line"><span class="comment">				if(abs(j-k)==abs(a[j]-a[k])) //如果在同一对角线上，直接返回 </span></span><br><span class="line"><span class="comment">				return;</span></span><br><span class="line"><span class="comment">			&#125;</span></span><br><span class="line"><span class="comment">		&#125;</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">		sum++; </span><br><span class="line">		<span class="comment">//print(n);     //打印输出合法结果 </span></span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;   <span class="comment">//枚举列数，该列未填数，则填入进行下一层递归 </span></span><br><span class="line">		<span class="keyword">if</span>(hashTable[i]==<span class="literal">false</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span>(islegal(p,i))&#123;        <span class="comment">//增加回溯判断 </span></span><br><span class="line">				hashTable[i]=<span class="literal">true</span>;</span><br><span class="line">				a[p]=i;</span><br><span class="line">				generate(p+<span class="number">1</span>,n);</span><br><span class="line">				hashTable[i]=<span class="literal">false</span>;  <span class="comment">//恢复未填状态 </span></span><br><span class="line">			&#125; </span><br><span class="line">		&#125; 	</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;    <span class="comment">//皇后数 </span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入你想求解的皇后数:\n"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	generate(<span class="number">1</span>,n);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"全部结果数："</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d"</span>,sum);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>调试结果：</strong></p>
+<p>已经可以快速算出14皇后问题，时间复杂度明显降低</p>
+<p><strong>优缺点：</strong></p>
+<p>1.枚举实现时间复杂度高，且代码编写难度要比递归实现大</p>
+<p>2.我还是认为函数不要太大，需要在主要函数中体现清晰的逻辑</p>
+<p>3.使用数组+标志位的方法判断该数是否被使用过，我觉得没有使用上面散列表的方式简单清晰，这也是引入散列表的优势所在</p>
+<p>4.都进行的优化，使其能够尽快计算到14皇后问题</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/04/dfsANDbfs/" rel="prev" title="BFS,DFS经典算法与模板">
+                BFS,DFS经典算法与模板 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">钊告天下</p>
+              <p class="site-description motion-element" itemprop="description">毁灭一个人最好的方式，就是给他很多的自由和时间，给他尽可能少的约束</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-n的阶乘"><span class="nav-number">1.</span> <span class="nav-text">1.n的阶乘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-全排列（输出从1-n的全排列）"><span class="nav-number">2.</span> <span class="nav-text">2.全排列（输出从1~n的全排列）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-n的皇后问题"><span class="nav-number">3.</span> <span class="nav-text">3.n的皇后问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">钊告天下</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
