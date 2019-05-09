@@ -242,6 +242,177 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/08/Linux1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="钊告天下">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="钊告天下">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/08/Linux1/" itemprop="url">Linux程序设计作业１</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-08T08:25:58+08:00">
+                2019-05-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux程序设计/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux程序设计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li>写一个脚本程序，它带一个参数，若该参数是一个普通文件，则把该文件的索引结点号、大小以及最近一次修改时间等详细信息输出来；如果该参数是一个目录，则将该目录（包含子目录）下的所有普通文件的文件名以及上述文件信息输出来。<br>要求：<br>(1)如果参数个数大于1，或者参数既不是普通文件也不是目录文件，则提示出错<br>(2)给出程序在两种不同类型参数(普通文件/目录)下的运行结果<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">if test $# -gt 1</span><br><span class="line">then </span><br><span class="line">	echo &quot;参数多于一个，错误&quot;</span><br><span class="line">	exit 1</span><br><span class="line">fi</span><br><span class="line">filename=&quot;$1&quot;</span><br><span class="line">if [ -f $1 ]</span><br><span class="line">then</span><br><span class="line">	set $(ls -il $filename)</span><br><span class="line">	inode=$1</span><br><span class="line">	size=$6</span><br><span class="line">	time1=$7</span><br><span class="line">	time2=$8</span><br><span class="line">	time3=$9</span><br><span class="line">echo &quot;Name	  inode    size   	time&quot;</span><br><span class="line">echo &quot;$filename  $inode  $size      $time1 $time2 $time3&quot;</span><br><span class="line">exit 0</span><br><span class="line">elif [ -d $filename ]</span><br><span class="line">then</span><br><span class="line">	for file in $(ls -R $filename)</span><br><span class="line">	do</span><br><span class="line">	if [ -f $file ]</span><br><span class="line">	then</span><br><span class="line">	ls -il  $file</span><br><span class="line">	fi</span><br><span class="line">	done</span><br><span class="line">	exit 0</span><br><span class="line">else</span><br><span class="line">	echo &quot;既不是文件也不是目录，错误&quot;</span><br><span class="line">	exit 1</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20190508081013695.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA5NzEy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20190508081027392.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA5NzEy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/201905080810483.png" alt="在这里插入图片描述"></p>
+<ol start="2">
+<li>写一个脚本程序，提示用户输入12个整数，其中前6个整数放到数组array1中，后6个整数放到数组array2中，接下来将两个数组对应位置的元素求和，将两个数组array1，array2以及其求和结果均输出到文件result.txt中。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">echo -e &quot;请输入12个整数:\n&quot;</span><br><span class="line">for((num=1;num&lt;=6;num++));</span><br><span class="line">do</span><br><span class="line">	read n</span><br><span class="line">	array1[$num]=$n</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for((num=1;num&lt;=6;num++));</span><br><span class="line">do</span><br><span class="line">        read n</span><br><span class="line">        array2[$num]=$n</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for((num=1;num&lt;=6;num++));</span><br><span class="line">do</span><br><span class="line">	array3[$num]=`expr $&#123;array2[$num]&#125; + $&#123;array1[$num]&#125;`</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">echo &quot;$&#123;array1[*]&#125;&quot;&gt;&gt;result.txt</span><br><span class="line">echo &quot;$&#123;array2[*]&#125;&quot;&gt;&gt;result.txt</span><br><span class="line">echo &quot;数组1和数组2相加结果为：&quot;&gt;&gt;result.txt</span><br><span class="line">echo &quot;$&#123;array3[*]&#125;&quot;&gt;&gt;result.txt</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20190508081108140.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA5NzEy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20190508081118670.png" alt="在这里插入图片描述"></p>
+<ol start="3">
+<li>写一个脚本程序，计算1-1/2+1/3-1/4+….-1/N的值<br>要求：<br>1)N由用户输入<br>2)保留小数点后3位<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">echo &quot;请输入N:&quot;</span><br><span class="line">read n</span><br><span class="line">total=0.000</span><br><span class="line">for((num=1;num&lt;=$n;num++));</span><br><span class="line">do</span><br><span class="line">	i=$num</span><br><span class="line">	flag=`expr $i % 2`</span><br><span class="line">	if test $flag -eq 0</span><br><span class="line">	then</span><br><span class="line">	       temp=`echo &quot;scale=3;-1.000/$i&quot; | bc`	</span><br><span class="line">       else</span><br><span class="line">	       temp=`echo &quot;scale=3;1.000/$i&quot; | bc`</span><br><span class="line">       fi</span><br><span class="line">       total=`echo &quot;scale=3;$total+$temp&quot; | bc`</span><br><span class="line">done</span><br><span class="line">echo $total</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20190508081135443.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA5NzEy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ol start="4">
+<li>编写c程序，利用随机数生成器生成N个100-200之间的整数，并将这N个整数存放在数组array中，接下来对数组array做如下处理：<br>1)求数组array中元素的次大值<br>2)求数组array中所有元素的标准差<br>要求：<br>(1)N由用户输入<br>(2)将上述1)和2)的实现分别放在一个.c文件中<br>(3)利用make工程管理器进行编译</li>
+</ol>
+<p>task4-main.c<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;math.h&gt;</span><br><span class="line"></span><br><span class="line">int secondMax(int a[],int n);</span><br><span class="line">double standardD(int a[],int n);</span><br><span class="line"></span><br><span class="line">int array[100];</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int n;</span><br><span class="line">	printf(&quot;请输入N:\n&quot;);</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">	for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">		array[i]=rand()%101+100;</span><br><span class="line">	&#125;</span><br><span class="line">	for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">		printf(&quot;%d &quot;,array[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;\n&quot;);</span><br><span class="line">	//求次大值</span><br><span class="line">	printf(&quot;次大值为：%d\n&quot;,secondMax(array,n));</span><br><span class="line">	//求所有元素的标准差</span><br><span class="line">	printf(&quot;标准差为：%f\n&quot;,standardD(array,n));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>task4-secondMax.c<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">int secondMax(int a[],int n)&#123;</span><br><span class="line">	//初始化最大值与次大值</span><br><span class="line">	int max,second;</span><br><span class="line">	if(a[0]&gt;a[1])&#123;</span><br><span class="line">		max=a[0];</span><br><span class="line">		second=a[1];</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		max=a[1];</span><br><span class="line">		second=a[0];</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	for(int i=2;i&lt;n;i++)&#123;</span><br><span class="line">		if(a[i]&gt;=max)&#123;</span><br><span class="line">			second=max;</span><br><span class="line">			max=a[i];</span><br><span class="line">		&#125;	</span><br><span class="line">		if(a[i]&lt;max&amp;&amp;a[i]&gt;second)&#123;</span><br><span class="line">			second=a[i];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return second;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>task4-standardD.c<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;math.h&quot;</span><br><span class="line">double standardD(int a[],int n)&#123;</span><br><span class="line">	int sum=0;</span><br><span class="line">	int ave=0;	</span><br><span class="line">	for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">		sum+=a[i];</span><br><span class="line">	&#125;</span><br><span class="line">	ave=sum/n;</span><br><span class="line">	double ss=0;</span><br><span class="line">	for(int i=0;i&lt;n;i++)&#123;</span><br><span class="line">		ss+=(ave-a[i])*(ave-a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	double result=sqrt(ss/n);</span><br><span class="line">	return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>makefile4<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">task4: task4-main.o task4-secondMax.o task4-standardD.o</span><br><span class="line">	gcc task4-main.o task4-secondMax.o task4-standardD.o -o task4 -lm</span><br><span class="line">task4-main.o: task4-main.c</span><br><span class="line">	gcc task4-main.c -c</span><br><span class="line">task4-secondMax.o: task4-secondMax.c</span><br><span class="line">	gcc task4-secondMax.c -c</span><br><span class="line">task4-standardD.o: task4-standardD.c</span><br><span class="line">	gcc task4-standardD.c -c</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://img-blog.csdnimg.cn/20190508081159650.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA5NzEy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ol start="5">
+<li>编写c程序，统计附件File1.txt中每个单词出现的次数<br>要求：使用带缓存的文件读写方式</li>
+</ol>
+<p><strong>通过测试发现：读取到换行时会占两个字节，分别为回车‘\r’,换行’\n’；这是将字符分开的关键</strong></p>
+<p>带缓存:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;sys/types.h&gt;</span><br><span class="line">#include&lt;sys/stat.h&gt;</span><br><span class="line">#include&lt;fcntl.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#include&lt;string.h&gt;</span><br><span class="line"></span><br><span class="line">char words[100][100];   //二维数组存放所有的单词</span><br><span class="line"></span><br><span class="line">struct word&#123;</span><br><span class="line">	int num;    //单词出现的数量</span><br><span class="line">	int pos;    //二维数组中存放单词的位置下标	</span><br><span class="line">&#125;w[100];</span><br><span class="line"></span><br><span class="line">void compare(char a[],int j)&#123;     //比较是否出现过，并修改结构体</span><br><span class="line">	w[j].num=-1;</span><br><span class="line">	for(int i=0;i&lt;j;i++)&#123;</span><br><span class="line">		if(strcmp(a,words[i])==0)&#123;</span><br><span class="line">			w[i].num++;</span><br><span class="line">			return;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	w[j].num=1;</span><br><span class="line">	w[j].pos=j;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void wordSegment(char buf[])&#123;    //将文件中读出的单词进行切分，存入二维数组	</span><br><span class="line">	int f=0,b=0;	    //buf数组前后指针</span><br><span class="line">	int j=0;            //二维数组行指针</span><br><span class="line">	while(buf[f]!=&apos;0&apos;)&#123;</span><br><span class="line">		if(buf[f]==&apos;\r&apos;)&#123;</span><br><span class="line">			int k=0;   //二维数组列指针</span><br><span class="line">			for(int i=b;i&lt;f;i++)&#123;</span><br><span class="line">				words[j][k++]=buf[i];</span><br><span class="line">			&#125;</span><br><span class="line">			compare(words[j],j);</span><br><span class="line">			j++;       </span><br><span class="line">			b=f+2;    </span><br><span class="line">			f++;      //跳过‘\n&apos;</span><br><span class="line">		&#125;</span><br><span class="line">		f++;</span><br><span class="line">	&#125;</span><br><span class="line">	for(int i=0;i&lt;j-1;i++)&#123;</span><br><span class="line">		if(w[i].num!=-1)&#123;</span><br><span class="line">			printf(&quot;%d  &quot;,w[i].num);</span><br><span class="line">			printf(&quot;%s\n&quot;,words[i]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">int main()&#123;</span><br><span class="line">	char buf[1000]=&#123;0&#125;;</span><br><span class="line">	char temp;</span><br><span class="line">	int fd;   //文件描述符</span><br><span class="line">	if((fd=open(&quot;File1.txt&quot;,O_RDONLY))&lt;0)&#123;  //只读方式打开文件</span><br><span class="line">		perror(&quot;打开文件出错&quot;);</span><br><span class="line">		exit(1);	</span><br><span class="line">	&#125;</span><br><span class="line">	int n=0;         </span><br><span class="line">	while(read(fd,&amp;temp,1))&#123;    //循环读入文件，每次读入1个字节</span><br><span class="line">		//if(temp==&apos;\n&apos;)&#123;</span><br><span class="line">		//	buf[n++]=0;</span><br><span class="line">		//&#125;</span><br><span class="line">		buf[n++]=temp;</span><br><span class="line">		//memset(buf,0,sizeof(buf));    //缓存区重置</span><br><span class="line">	&#125;</span><br><span class="line">	buf[n++]=&apos;\r&apos;;          //最后一个单词后加入标志</span><br><span class="line">	buf[n++]=&apos;0&apos;;          //加入读取结束标志</span><br><span class="line">	//printf(&quot;%s&quot;,buf);</span><br><span class="line">	//通过测试发现：读取到换行时会占两个字节，分别为回车‘\r&apos;,换行’\n&apos;；这是将字符分开的关键</span><br><span class="line">	close(fd);</span><br><span class="line">	</span><br><span class="line">	wordSegment(buf);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>File1.txt:<br><img src="https://img-blog.csdnimg.cn/20190508081303243.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA5NzEy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20190508081331732.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNjA5NzEy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/05/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -742,7 +913,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -753,7 +924,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
